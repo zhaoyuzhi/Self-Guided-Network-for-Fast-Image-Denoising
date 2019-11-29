@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import PixelUnShuffle
 from network_module import *
-from PixelUnShuffle import *
 
 # ----------------------------------------
 #         Initialize the networks
@@ -48,17 +48,17 @@ class SGN(nn.Module):
         self.top3 = Conv2dLayer(opt.start_channels * (2 ** 3), opt.start_channels * (2 ** 3), 3, 1, 1, pad_type = opt.pad, norm = opt.norm)
         # Middle subnetwork, K = 2
         self.mid1 = Conv2dLayer(opt.in_channels * (4 ** 2), opt.start_channels * (2 ** 2), 3, 1, 1, pad_type = opt.pad, norm = opt.norm)
-        self.mid2 = Conv2dLayer(opt.start_channels * (2 ** 2 + 2 ** 3 / 4), opt.start_channels * (2 ** 2), 3, 1, 1, pad_type = opt.pad, norm = opt.norm)
+        self.mid2 = Conv2dLayer(int(opt.start_channels * (2 ** 2 + 2 ** 3 / 4)), opt.start_channels * (2 ** 2), 3, 1, 1, pad_type = opt.pad, norm = opt.norm)
         self.mid3 = ResConv2dLayer(opt.start_channels * (2 ** 2), opt.start_channels * (2 ** 2), 3, 1, 1, pad_type = opt.pad, norm = opt.norm)
         self.mid4 = Conv2dLayer(opt.start_channels * (2 ** 2), opt.start_channels * (2 ** 2), 3, 1, 1, pad_type = opt.pad, norm = opt.norm)
         # Bottom subnetwork, K = 1
         self.bot1 = Conv2dLayer(opt.in_channels * (4 ** 1), opt.start_channels * (2 ** 1), 3, 1, 1, pad_type = opt.pad, norm = opt.norm)
-        self.bot2 = Conv2dLayer(opt.start_channels * (2 ** 1 + 2 ** 2 / 4), opt.start_channels * (2 ** 1), 3, 1, 1, pad_type = opt.pad, norm = opt.norm)
+        self.bot2 = Conv2dLayer(int(opt.start_channels * (2 ** 1 + 2 ** 2 / 4)), opt.start_channels * (2 ** 1), 3, 1, 1, pad_type = opt.pad, norm = opt.norm)
         self.bot3 = ResConv2dLayer(opt.start_channels * (2 ** 1), opt.start_channels * (2 ** 1), 3, 1, 1, pad_type = opt.pad, norm = opt.norm)
         self.bot4 = Conv2dLayer(opt.start_channels * (2 ** 1), opt.start_channels * (2 ** 1), 3, 1, 1, pad_type = opt.pad, norm = opt.norm)
         # Mainstream
         self.main1 = Conv2dLayer(opt.in_channels, opt.start_channels, 3, 1, 1, pad_type = opt.pad, norm = opt.norm)
-        self.main2 = Conv2dLayer(opt.start_channels * (2 ** 0 + 2 ** 1 / 4), opt.start_channels, 3, 1, 1, pad_type = opt.pad, norm = opt.norm)
+        self.main2 = Conv2dLayer(int(opt.start_channels * (2 ** 0 + 2 ** 1 / 4)), opt.start_channels, 3, 1, 1, pad_type = opt.pad, norm = opt.norm)
         self.main3 = nn.ModuleList([Conv2dLayer(opt.start_channels, opt.start_channels, 3, 1, 1, pad_type = opt.pad, norm = opt.norm)])
         self.main3.append(Conv2dLayer(opt.start_channels, opt.start_channels, 3, 1, 1, pad_type = opt.pad, norm = opt.norm))
         self.main3.append(Conv2dLayer(opt.start_channels, opt.start_channels, 3, 1, 1, pad_type = opt.pad, norm = opt.norm))
@@ -70,7 +70,7 @@ class SGN(nn.Module):
         # PixelUnShuffle                                        input: batch * 3 * 256 * 256
         x1 = PixelUnShuffle.pixel_unshuffle(x, 2)               # out: batch * 12 * 128 * 128
         x2 = PixelUnShuffle.pixel_unshuffle(x1, 2)              # out: batch * 48 * 64 * 64
-        x3 = PixelUnShuffle.pixel_unshuffle(x1, 2)              # out: batch * 192 * 32 * 32
+        x3 = PixelUnShuffle.pixel_unshuffle(x2, 2)              # out: batch * 192 * 32 * 32
         # Top subnetwork                                        suppose the start_channels = 32
         x3 = self.top1(x3)                                      # out: batch * 256 * 32 * 32
         x3 = self.top2(x3)                                      # out: batch * 256 * 32 * 32
