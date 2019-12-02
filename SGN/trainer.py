@@ -90,18 +90,18 @@ def Trainer(opt):
 
     # For loop training
     for epoch in range(opt.epochs):
-        for i, (true_A, true_B) in enumerate(dataloader):
+        for i, (noisy_img, img) in enumerate(dataloader):
 
             # To device
-            true_A = true_A.cuda()
-            true_B = true_B.cuda()
+            noisy_img = noisy_img.cuda()
+            img = img.cuda()
 
             # Train Generator
             optimizer_G.zero_grad()
 
             # Forword propagation
-            fake_B = generator(true_A)
-            loss = criterion_L1(fake_B, true_B)
+            recon_img = generator(noisy_img)
+            loss = criterion_L1(recon_img, img)
 
             # Overall Loss and optimize
             loss.backward()
@@ -122,4 +122,3 @@ def Trainer(opt):
 
             # Learning rate decrease at certain epochs
             adjust_learning_rate(opt, (epoch + 1), optimizer_G)
-

@@ -39,13 +39,14 @@ if __name__ == "__main__":
     parser.add_argument('--init_type', type = str, default = 'normal', help = 'initialization type of networks')
     parser.add_argument('--init_gain', type = float, default = 0.02, help = 'initialization gain of networks')
     # Dataset parameters
-    parser.add_argument('--baseroot_A', type = str, default = '', help = 'noisy images baseroot')
-    parser.add_argument('--baseroot_B', type = str, default = '', help = 'clean images baseroot')
+    parser.add_argument('--baseroot', type = str, default = 'C:\\Users\\yzzha\\Desktop\\dataset\\DIV2K\\DIV2K_train_HR', help = 'images baseroot')
     parser.add_argument('--crop_size', type = int, default = 256, help = 'single patch size')
     parser.add_argument('--geometry_aug', type = bool, default = False, help = 'geometry augmentation (scaling)')
     parser.add_argument('--angle_aug', type = bool, default = False, help = 'geometry augmentation (rotation, flipping)')
     parser.add_argument('--scale_min', type = float, default = 1, help = 'min scaling factor')
     parser.add_argument('--scale_max', type = float, default = 1, help = 'max scaling factor')
+    parser.add_argument('--mu', type = float, default = 0, help = 'min scaling factor')
+    parser.add_argument('--sigma', type = float, default = 30, help = 'max scaling factor')
     opt = parser.parse_args()
 
     # ----------------------------------------

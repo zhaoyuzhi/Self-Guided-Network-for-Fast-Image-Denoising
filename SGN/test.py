@@ -13,8 +13,7 @@ if __name__ == "__main__":
     # ----------------------------------------
     parser = argparse.ArgumentParser()
     # Dataset parameters
-    parser.add_argument('--baseroot', type = str, default = "/home/alien/Documents/LINTingyu/denoising", help = 'the testing folder')
-    parser.add_argument('--crop_size', type = int, default = 256, help = 'single patch size')
+    parser.add_argument('--baseroot', type = str, default = "/home/alien/Documents/zhaoyuzhi/denoising", help = 'the testing folder')
     parser.add_argument('--geometry_aug', type = bool, default = False, help = 'geometry augmentation (scaling)')
     parser.add_argument('--angle_aug', type = bool, default = False, help = 'geometry augmentation (rotation, flipping)')
     parser.add_argument('--scale_min', type = float, default = 1, help = 'min scaling factor')
@@ -32,7 +31,7 @@ if __name__ == "__main__":
     # ----------------------------------------
 
     # Define the dataset
-    testset = dataset.DenoisingDataset(opt)
+    testset = dataset.FullResDenoisingDataset(opt)
     print('The overall number of images equals to %d' % len(testset))
 
     # Define the dataloader
@@ -54,10 +53,12 @@ if __name__ == "__main__":
         recon_img = model(noisy_img)
 
         # convert to visible image format
-        img = img.cpu().numpy().reshape(3, opt.crop_size, opt.crop_size).transpose(1, 2, 0)
+        h = img.shape[2]
+        w = img.shape[3]
+        img = img.cpu().numpy().reshape(3, h, w).transpose(1, 2, 0)
         img = (img + 1) * 128
         img = img.astype(np.uint8)
-        recon_img = recon_img.detach().cpu().numpy().reshape(3, opt.crop_size, opt.crop_size).transpose(1, 2, 0)
+        recon_img = recon_img.detach().cpu().numpy().reshape(3, h, w).transpose(1, 2, 0)
         recon_img = (recon_img + 1) * 128
         recon_img = recon_img.astype(np.uint8)
 
