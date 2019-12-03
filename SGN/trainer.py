@@ -37,12 +37,11 @@ def Trainer(opt):
     optimizer_G = torch.optim.Adam(generator.parameters(), lr = opt.lr, betas = (opt.b1, opt.b2), weight_decay = opt.weight_decay)
     
     # Learning rate decrease
-    def adjust_learning_rate(opt, epoch, optimizer):
-        #Set the learning rate to the initial LR decayed by "lr_decrease_factor" every "lr_decrease_epoch" epochs
-        if epoch >= opt.epoch_decreased:
-            lr = opt.lr_decreased
+    def adjust_learning_rate(opt, iteration, optimizer):
+        # Set the learning rate to the specific value
+        if epoch >= opt.iter_decreased:
             for param_group in optimizer.param_groups:
-                param_group['lr'] = lr
+                param_group['lr'] = opt.lr_decreased
 
     # Save the model if pre_train == True
     def save_model(opt, epoch, iteration, len_dataset, network):
@@ -50,25 +49,21 @@ def Trainer(opt):
         if opt.multi_gpu == True:
             if opt.save_mode == 'epoch':
                 if (epoch % opt.save_by_epoch == 0) and (iteration % len_dataset == 0):
-                    if opt.save_name_mode:
-                        torch.save(network.module, 'SGN_epoch%d_bs%d.pth' % (epoch, opt.batch_size))
-                        print('The trained model is successfully saved at epoch %d' % (epoch))
+                    torch.save(network.module.state_dict(), 'SGN_epoch%d_bs%d_mu%d_sigma%d.pth' % (epoch, opt.batch_size, opt.mu, opt.sigma))
+                    print('The trained model is successfully saved at epoch %d' % (epoch))
             if opt.save_mode == 'iter':
                 if iteration % opt.save_by_iter == 0:
-                    if opt.save_name_mode:
-                        torch.save(network.module, 'SGN_iter%d_bs%d.pth' % (iteration, opt.batch_size))
-                        print('The trained model is successfully saved at iteration %d' % (iteration))
+                    torch.save(network.module.state_dict(), 'SGN_iter%d_bs%d_mu%d_sigma%d.pth' % (iteration, opt.batch_size, opt.mu, opt.sigma))
+                    print('The trained model is successfully saved at iteration %d' % (iteration))
         else:
             if opt.save_mode == 'epoch':
                 if (epoch % opt.save_by_epoch == 0) and (iteration % len_dataset == 0):
-                    if opt.save_name_mode:
-                        torch.save(network, 'SGN_epoch%d_bs%d.pth' % (epoch, opt.batch_size))
-                        print('The trained model is successfully saved at epoch %d' % (epoch))
+                    torch.save(network.state_dict(), 'SGN_epoch%d_bs%d_mu%d_sigma%d.pth' % (epoch, opt.batch_size, opt.mu, opt.sigma))
+                    print('The trained model is successfully saved at epoch %d' % (epoch))
             if opt.save_mode == 'iter':
                 if iteration % opt.save_by_iter == 0:
-                    if opt.save_name_mode:
-                        torch.save(network, 'SGN_iter%d_bs%d.pth' % (iteration, opt.batch_size))
-                        print('The trained model is successfully saved at iteration %d' % (iteration))
+                    torch.save(network.state_dict(), 'SGN_iter%d_bs%d_mu%d_sigma%d.pth' % (iteration, opt.batch_size, opt.mu, opt.sigma))
+                    print('The trained model is successfully saved at iteration %d' % (iteration))
 
     # ----------------------------------------
     #             Network dataset
@@ -121,4 +116,4 @@ def Trainer(opt):
             save_model(opt, (epoch + 1), (iters_done + 1), len(dataloader), generator)
 
             # Learning rate decrease at certain epochs
-            adjust_learning_rate(opt, (epoch + 1), optimizer_G)
+            adjust_learning_rate(opt, (iters_done + 1), optimizer_G)
