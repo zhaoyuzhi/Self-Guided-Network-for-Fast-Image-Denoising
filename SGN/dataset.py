@@ -58,7 +58,8 @@ class DenoisingDataset(Dataset):
         cropper = RandomCrop(img.shape[:2], (self.opt.crop_size, self.opt.crop_size))
         img = cropper(img)
         # random rotate and horizontal flip
-        if self.opt.geometry_aug:
+        # according to paper, these two data augmentation methods are recommended
+        if self.opt.angle_aug:
             rotate = random.randint(0, 3)
             if rotate != 0:
                 img = np.rot90(img, rotate)
