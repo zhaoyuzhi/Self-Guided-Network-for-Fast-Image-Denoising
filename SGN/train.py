@@ -12,9 +12,10 @@ if __name__ == "__main__":
     # According to paper, the recommend setting is to train the model for 1M iterations, so it is better to save at each 100K iterations
     # The epoch is large enough that the model can be trained more than 1M iterations, users could stop it if it is well trained
     # The learning rate is set to 1e-4 during first 500K iterations, while it is 1e-5 during last 500K iterations
+    # For DIV2K dataset: epoch 10000 + batch_size 8 = iteration 1000000; I recommend to save 10 models for the whole training stage
     parser.add_argument('--pre_train', type = bool, default = True, help = 'pre-train ot not')
     parser.add_argument('--save_mode', type = str, default = 'iter', help = 'saving mode, and by_epoch saving is recommended')
-    parser.add_argument('--save_by_epoch', type = int, default = 10000, help = 'interval between model checkpoints (by epochs)')
+    parser.add_argument('--save_by_epoch', type = int, default = 1000, help = 'interval between model checkpoints (by epochs)')
     parser.add_argument('--save_by_iter', type = int, default = 100000, help = 'interval between model checkpoints (by iterations)')
     parser.add_argument('--load_name', type = str, default = '', help = 'load the pre-trained model with certain epoch')
     # GPU parameters
@@ -22,7 +23,7 @@ if __name__ == "__main__":
     parser.add_argument('--gpu_ids', type = str, default = '0, 1, 2, 3', help = 'gpu_ids: e.g. 0  0,1  0,1,2  use -1 for CPU')
     parser.add_argument('--cudnn_benchmark', type = bool, default = True, help = 'True for unchanged input data type')
     # Training parameters
-    parser.add_argument('--epochs', type = int, default = 100000, help = 'number of epochs of training that ensures 100K training iterations')
+    parser.add_argument('--epochs', type = int, default = 10000, help = 'number of epochs of training that ensures 100K training iterations')
     parser.add_argument('--batch_size', type = int, default = 8, help = 'size of the batches, 8 is recommended')
     parser.add_argument('--lr', type = float, default = 0.0001, help = 'Adam: learning rate')
     parser.add_argument('--b1', type = float, default = 0.9, help = 'Adam: decay of first order momentum of gradient')
