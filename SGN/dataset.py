@@ -63,7 +63,7 @@ class DenoisingDataset(Dataset):
             rotate = random.randint(0, 3)
             if rotate != 0:
                 img = np.rot90(img, rotate)
-            if np.random.random() >= 0.5:
+            if random.random() >= 0.5:
                 img = cv2.flip(img, flipCode = 0)
         
         # add noise
