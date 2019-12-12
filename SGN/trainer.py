@@ -39,7 +39,7 @@ def Trainer(opt):
     # Learning rate decrease
     def adjust_learning_rate(opt, iteration, optimizer):
         # Set the learning rate to the specific value
-        if epoch >= opt.iter_decreased:
+        if iteration >= opt.iter_decreased:
             for param_group in optimizer.param_groups:
                 param_group['lr'] = opt.lr_decreased
 
