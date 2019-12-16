@@ -29,7 +29,7 @@ if __name__ == "__main__":
     parser.add_argument('--num', type = int, default = 1000, help = 'number of sample images')
     parser.add_argument('--range', type = str, default = '01', help = 'normalization range, e.g. 01 represents [0, 1]')
     parser.add_argument('--gray', type = bool, default = False, help = 'False for color images, True for grayscale')
-    parser.add_argument('--noise_scale', type = float, default = 0.1, help = 'Gaussian noise standard deviation')
+    parser.add_argument('--noise_scale', type = float, default = 0.05, help = 'Gaussian noise standard deviation')
     opt = parser.parse_args()
 
     # random sample all the images
@@ -49,9 +49,9 @@ if __name__ == "__main__":
         print('PSNR:', current_psnr)
         print('L2 Loss:', l2)
         print('L1 Loss:', l1)
-        img = img * 255.0
-        img = np.clip(img, 0, 255).astype(np.uint8)
-        cv2.imshow('noisy image', img)
+        img_noise = img_noise * 255.0
+        img_noise = np.clip(img_noise, 0, 255).astype(np.uint8)
+        cv2.imshow('noisy image', img_noise)
         cv2.waitKey(0)
 
     if opt.range == '-11':
@@ -65,9 +65,9 @@ if __name__ == "__main__":
         print('PSNR:', current_psnr)
         print('L2 Loss:', l2)
         print('L1 Loss:', l1)
-        img = (img + 1) * 128.0
-        img = np.clip(img, 0, 255).astype(np.uint8)
-        cv2.imshow('noisy image', img)
+        img_noise = (img_noise + 1) * 128.0
+        img_noise = np.clip(img_noise, 0, 255).astype(np.uint8)
+        cv2.imshow('noisy image', img_noise)
         cv2.waitKey(0)
 
     if opt.range == '0255':
@@ -80,7 +80,8 @@ if __name__ == "__main__":
         print('PSNR:', current_psnr)
         print('L2 Loss:', l2)
         print('L1 Loss:', l1)
-        img = np.clip(img, 0, 255).astype(np.uint8)
-        cv2.imshow('noisy image', img)
+        img_noise = np.clip(img_noise, 0, 255).astype(np.uint8)
+        cv2.imshow('noisy image', img_noise)
         cv2.waitKey(0)
-        
+    
+    #cv2.imwrite(str(opt.noise_scale) + '.png', img_noise)

@@ -29,7 +29,7 @@ if __name__ == "__main__":
     parser.add_argument('--num', type = int, default = 1000, help = 'number of sample images')
     parser.add_argument('--range', type = str, default = '01', help = 'normalization range, e.g. 01 represents [0, 1]')
     parser.add_argument('--gray', type = bool, default = True, help = 'False for color images, True for grayscale')
-    parser.add_argument('--noise_scale', type = float, default = 0.04, help = 'Gaussian noise standard deviation')
+    parser.add_argument('--noise_scale', type = float, default = 0.01, help = 'Gaussian noise standard deviation')
     opt = parser.parse_args()
 
     # random sample all the images
