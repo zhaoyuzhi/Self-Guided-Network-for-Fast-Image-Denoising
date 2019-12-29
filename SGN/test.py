@@ -21,8 +21,9 @@ if __name__ == "__main__":
     parser.add_argument('--mu', type = float, default = 0, help = 'min scaling factor')
     parser.add_argument('--sigma', type = float, default = 30, help = 'max scaling factor')
     # Other parameters
+    parser.add_argument('--pre_train', type = bool, default = False, help = 'testing phase')
     parser.add_argument('--batch_size', type = int, default = 1, help = 'test batch size, always 1')
-    parser.add_argument('--load_name', type = str, default = 'SGN_epoch1000_batchsize64.pth', help = 'test model name')
+    parser.add_argument('--load_name', type = str, default = 'SGN_epoch1000_batchsize64', help = 'test model name')
     opt = parser.parse_args()
     print(opt)
 
@@ -41,7 +42,7 @@ if __name__ == "__main__":
     #                 Testing
     # ----------------------------------------
 
-    model = torch.load(opt.load_name)
+    model = utils.create_generator(opt)
 
     for batch_idx, (noisy_img, img) in enumerate(dataloader):
 
