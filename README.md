@@ -4,13 +4,13 @@ The PyTorch implementation of SGN, and the estimation PSNR of given noise range
 
 ## 1 Demo: trained SGN on ILSVRC2012 validation set (mu = 0, sigma = 30) (1000000 iterations)
 
-left: input clean image
+left: clean image  (selected from COCO2014 validation set COCO_val2014_000000264615.jpg)
 
 middle: additive Gaussian noise + clean image
 
 right: denoised image using trained SGN
 
-<img src="./result.jpg" width="750"/>
+<img src="./result.jpg" width="1000"/>
 
 ## 2 Noise Estimate
 
