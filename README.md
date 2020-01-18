@@ -12,6 +12,9 @@ right: denoised image using trained SGN
 
 <img src="./result.jpg" width="1000"/>
 
+You can download pre-trained models (also on ILSVRC2012 validation set, different mu and sigma) in below link:
+https://portland-my.sharepoint.com/:f:/g/personal/yzzhao2-c_ad_cityu_edu_hk/EnJkUyTlR1ZPghHh6_Z0GDQBcHpH60LUUtYvKihrILkeRA?e=W10vvF
+
 ## 2 Noise Estimate
 
 zero mean Gaussian noise
