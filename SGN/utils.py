@@ -31,14 +31,14 @@ def create_generator(opt):
         # Initialize the network
         generator = network.SGN(opt)
         # Load a pre-trained network
-        pretrained_net = torch.load(opt.load_name + '.pth')
+        pretrained_net = torch.load(opt.load_name)
         load_dict(generator, pretrained_net)
         print('Generator is loaded!')
     return generator
     
 def load_dict(process_net, pretrained_net):
     # Get the dict from pre-trained network
-    pretrained_dict = pretrained_net.state_dict()
+    pretrained_dict = pretrained_net
     # Get the dict from processing network
     process_dict = process_net.state_dict()
     # Delete the extra keys of pretrained_dict that do not belong to process_dict

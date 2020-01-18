@@ -33,7 +33,7 @@ if __name__ == "__main__":
     parser.add_argument('--lr_decreased', type = float, default = 0.00001, help = 'decreased learning rate at certain epoch')
     parser.add_argument('--num_workers', type = int, default = 4, help = 'number of cpu threads to use during batch generation')
     # Initialization parameters
-    parser.add_argument('--pad', type = str, default = 'reflect', help = 'pad type of networks')
+    parser.add_argument('--pad', type = str, default = 'zero', help = 'pad type of networks')
     parser.add_argument('--norm', type = str, default = 'none', help = 'normalization type of networks')
     parser.add_argument('--in_channels', type = int, default = 3, help = 'input channels for generator')
     parser.add_argument('--out_channels', type = int, default = 3, help = 'output channels for generator')
@@ -52,6 +52,7 @@ if __name__ == "__main__":
     parser.add_argument('--sigma', type = int, default = 30, help = 'Gaussian noise variance: 30 | 50 | 70')
     opt = parser.parse_args()
 
+    '''
     # ----------------------------------------
     #        Choose CUDA visible devices
     # ----------------------------------------
@@ -61,6 +62,7 @@ if __name__ == "__main__":
     else:
         os.environ["CUDA_VISIBLE_DEVICES"] = "0"
         print('Single-GPU mode')
+    '''
     
     # ----------------------------------------
     #                 Trainer
