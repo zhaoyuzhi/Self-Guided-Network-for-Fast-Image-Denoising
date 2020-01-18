@@ -2,9 +2,11 @@
 
 The PyTorch implementation of SGN, and the estimation PSNR of given noise range
 
-## 1 Demo: trained SGN on ILSVRC2012 validation set (mu = 0, sigma = 30) (1000000 iterations)
+## 1 Demo: trained SGN on ILSVRC2012 validation set (mu = 0, sigma = 30, batchsize = 32, 1000000 iterations)
 
-left: clean image  (selected from COCO2014 validation set COCO_val2014_000000264615.jpg)
+We train it using ILSVRC2012 validation set on 4 NVIDIA TITAN Xp GPUs and test it on 1 TITAN Xp GPU. The training strategy is the same as paper. The details are shown in code `train.py`.
+
+left: clean image  (selected from COCO2014 validation set, COCO_val2014_000000264615.jpg)
 
 middle: additive Gaussian noise + clean image
 
@@ -12,8 +14,7 @@ right: denoised image using trained SGN
 
 <img src="./result.jpg" width="1000"/>
 
-You can download pre-trained models (also on ILSVRC2012 validation set, different mu and sigma) in below link:
-https://portland-my.sharepoint.com/:f:/g/personal/yzzhao2-c_ad_cityu_edu_hk/EnJkUyTlR1ZPghHh6_Z0GDQBcHpH60LUUtYvKihrILkeRA?e=W10vvF
+You can download pre-trained models (also on ILSVRC2012 validation set, different mu and sigma) in this [link](https://portland-my.sharepoint.com/:f:/g/personal/yzzhao2-c_ad_cityu_edu_hk/EnJkUyTlR1ZPghHh6_Z0GDQBcHpH60LUUtYvKihrILkeRA?e=W10vvF).
 
 ## 2 Noise Estimate
 
