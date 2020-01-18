@@ -2,7 +2,17 @@
 
 The PyTorch implementation of SGN, and the estimation PSNR of given noise range
 
-## 1 Noise Estimate
+## 1 Demo: trained SGN on ILSVRC2012 validation set (mu = 0, sigma = 30) (1000000 iterations)
+
+left: input clean image
+
+middle: additive Gaussian noise + clean image
+
+right: denoised image using trained SGN
+
+<img src="./result.jpg" width="750"/>
+
+## 2 Noise Estimate
 
 zero mean Gaussian noise
 
@@ -11,7 +21,7 @@ zero mean Gaussian noise
 | standard deviation in [0, 255] | 25.5 | 19.125 | 12.75 | 10.2 | 7.65 | 5.1 | 2.55 | 1.9125 | 1.275 | 0.0255 |
 | average PSNR | 20.00 | 22.46 | 26.00 | 27.95 | 30.47 | 33.98 | 40.00 | 42.49 | 46.00 | 60.00 |
 
-## 2 Noise Examples
+## 3 Noise Examples
 
 There are some examples, corresponding to specific noise standard deviation.
 
